@@ -1,3 +1,7 @@
+@if (showLanguageModal()) {
+  <app-language-selection-modal (onSelect)="handleLanguageSelection($event)" />
+}
+
 <app-pokemon-type-filter #typeFilter (onTypeChange)="handleTypeFilter($event)" />
 
 @if (showSpinner()) {

@@ -1,0 +1,37 @@
+<div class="fixed inset-0 z-[300] flex items-center justify-center bg-black/60 backdrop-blur-xl animate-fade-in p-4">
+  <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] max-w-sm w-full overflow-hidden border-4 border-gray-800">
+    
+    <div class="bg-red-600/90 p-6 border-b-4 border-gray-800 flex flex-col items-center gap-4">
+      <img src="assets/images/pokemonLogo.svg" alt="Pokemon Logo" class="h-12 lg:h-16 drop-shadow-lg">
+      <h2 class="font-pokemon text-white text-lg text-center leading-tight">
+        SELECT LANGUAGE <br> SELECCIONA IDIOMA
+      </h2>
+    </div>
+
+    <div class="p-8 flex flex-col gap-4 bg-white/50">
+      <button 
+        (click)="selectLanguage('en')"
+        class="group relative bg-white/80 border-2 border-gray-300 hover:border-blue-500 p-4 rounded-xl transition-all hover:scale-105 hover:shadow-lg flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="https://flagcdn.com/us.svg" class="w-8 h-6 rounded shadow-sm object-cover" alt="English">
+          <span class="text-lg font-bold text-gray-700">English</span>
+        </div>
+        <span class="opacity-0 group-hover:opacity-100 transition-opacity text-blue-500 font-bold">SELECT</span>
+      </button>
+
+      <button 
+        (click)="selectLanguage('es')"
+        class="group relative bg-white/80 border-2 border-gray-300 hover:border-red-500 p-4 rounded-xl transition-all hover:scale-105 hover:shadow-lg flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="https://flagcdn.com/mx.svg" class="w-8 h-6 rounded shadow-sm object-cover" alt="Español">
+          <span class="text-lg font-bold text-gray-700">Español</span>
+        </div>
+        <span class="opacity-0 group-hover:opacity-100 transition-opacity text-red-500 font-bold">ELEGIR</span>
+      </button>
+    </div>
+    
+    <div class="bg-gray-800/90 p-3 text-center">
+      <p class="text-[10px] text-gray-300 uppercase font-bold">Kevin Mahecha — System Setup</p>
+    </div>
+  </div>
+</div>

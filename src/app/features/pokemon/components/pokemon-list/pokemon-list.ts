@@ -6,11 +6,12 @@ import { PokemonCard } from '../../../../shared/components/pokemon-card/pokemon-
 import { PokemonTypeFilter } from "../type-filter/type-filter";
 import { PokemonDetailModal } from '../pokemon-detail-modal/pokemon-detail-modal';
 import { catchError, forkJoin, of } from 'rxjs';
+import { LanguageSelectionModal } from '../../../../shared/components/language-selection-modal/language-selection-modal';
 
 @Component({
   selector: 'app-pokemon-list',
   standalone: true,
-  imports: [GridComponent, PokemonCard, PokemonTypeFilter, PokemonDetailModal],
+  imports: [GridComponent, PokemonCard, PokemonTypeFilter, PokemonDetailModal, LanguageSelectionModal],
   templateUrl: './pokemon-list.html'
 })
 export class PokemonListComponent implements OnInit {
@@ -26,6 +27,8 @@ export class PokemonListComponent implements OnInit {
   filterQuery = signal<string>('');
   emptyPokemonList = signal(false);
   showSpinner = signal(false);
+  showLanguageModal = signal(false);
+
   private _loaderTimeout: any;
   
   constructor() {
@@ -101,6 +104,19 @@ export class PokemonListComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    const savedLang = localStorage.getItem('pokedex_lang');
+    if (!savedLang) {
+    this.showLanguageModal.set(true);
+  } else {
+    this._pokemonService.language.set(savedLang as 'es' | 'en');
+    this.loadPokemonsData();
+  }
+  }
+
+  handleLanguageSelection(lang: 'es' | 'en') {
+    localStorage.setItem('pokedex_lang', lang);
+    this._pokemonService.language.set(lang);
+    this.showLanguageModal.set(false);
     this.loadPokemonsData();
   }
 
