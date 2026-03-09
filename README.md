@@ -1,5 +1,7 @@
 # KevinMahecha_PokeDex
 
+[![Ver en Vivo](https://img.shields.io/badge/Demo-Vercel-red?style=for-the-badge&logo=vercel)](https://kevin-mahecha-pokedex.vercel.app)
+
 Este proyecto es una Pokédex interactiva desarrollada con el objetivo de profundizar en el ecosistema de **Angular**. Se enfoca en la implementación de las últimas características del framework, la gestión de estados reactivos y el consumo eficiente de APIs REST.
 
 ## Propósito del Proyecto
@@ -25,3 +27,5 @@ Diseño responsivo con técnicas de *glassmorphism* (`backdrop-blur`) y animacio
 * **Timer de Cortesía:** Implementación de un retraso de 500ms para el spinner de carga global, evitando parpadeos visuales innecesarios en conexiones rápidas.
 * **Búsqueda e Historial:** Sistema de búsqueda global que integra resultados locales y consultas directas a la API cuando el Pokémon no reside en la caché actual.
 * **Paginación Eficiente:** Manejo de grandes volúmenes de datos mediante un sistema de paginado manual controlado por señales.
+
+**¿Te gusta mi trabajo?** ¡Hablemos! Puedes encontrar mis datos de contacto en mi [Sitio Personal](https://kevinmahecha.vercel.app/)
