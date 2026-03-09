@@ -1,5 +1,7 @@
 # KevinMahecha_PokeDex
 
+[![Ver en Vivo](https://img.shields.io/badge/Demo-Vercel-red?style=for-the-badge&logo=vercel)](https://kevin-mahecha-pokedex.vercel.app)
+
 Este proyecto es una Pokédex interactiva desarrollada con el objetivo de profundizar en el ecosistema de **Angular**. Se enfoca en la implementación de las últimas características del framework, la gestión de estados reactivos y el consumo eficiente de APIs REST.
 
 ## Propósito del Proyecto
