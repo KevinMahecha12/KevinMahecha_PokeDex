@@ -1,0 +1,130 @@
+<div class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in" (click)="close.emit()">
+  <div class="bg-white rounded-3xl overflow-hidden w-full max-w-lg lg:max-w-4xl shadow-2xl border-2 border-poke-blue relative font-pokemon h-[90vh] lg:h-[85vh] flex flex-col" (click)="$event.stopPropagation()">
+    
+    <button (click)="close.emit()" class="absolute top-4 right-4 z-[120] bg-red-500 text-white w-8 h-8 rounded-full shadow-lg border-2 border-white active:scale-90 transition-all cursor-pointer">×</button>
+
+    <div class="bg-poke-blue p-6 text-white text-center relative overflow-hidden h-30 lg:h-32 shrink-0">
+      <div class="flex justify-between flex-col gap-y-2 lg:gap-y-4 z-20 mx-2 items-center">
+        <h2 class="text-xl lg:text-3xl uppercase mb-1 drop-shadow-md">{{ pokemon().name }}</h2>
+        <span class="bg-white/20 px-4 py-1 w-1/2 lg:w-1/4 rounded-full text-xs italic font-bold border border-white/10 backdrop-blur-md">Nº {{ pokemon().id }}</span>
+      </div>
+    </div>
+
+    <div class="p-4 lg:p-6 pt-0 my-2 flex-1 min-h-0 overflow-y-auto lg:overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full">
+        
+        <div class="lg:col-span-5 flex flex-col h-full min-h-[300px] lg:min-h-0">
+          <div class="flex-1 flex items-center justify-center relative z-10">
+            <img [src]="currentImage()" 
+                (error)="handleImageError()"
+                [alt]="pokemon().name"
+                class="w-44 h-44 lg:w-64 lg:h-64 object-contain transform hover:scale-110 transition-transform duration-300 drop-shadow-2xl">
+          </div>
+
+          <div class="space-y-4 shrink-0 mb-4 lg:mb-0">
+            <div class="flex justify-center gap-2">
+              @for (type of pokemon().types; track type) {
+                <div class="flex items-center gap-2 px-3 py-1 rounded-full border border-gray-100 bg-gray-50 shadow-sm">
+                  <img [src]="getTypeIcon(type)" class="w-3 h-3 object-contain">
+                  <span class="text-[9px] font-bold uppercase text-gray-600">{{ ui().translateType(type) }}</span>
+                </div>
+              }
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="bg-blue-50/50 p-3 rounded-2xl border border-blue-100 text-center">
+                <span class="text-gray-400 text-[8px] uppercase block">{{ ui().height }}</span>
+                <span class="text-poke-blue font-bold text-base">{{ (pokemon().height || 0) / 10 }} m</span>
+              </div>
+              <div class="bg-blue-50/50 p-3 rounded-2xl border border-blue-100 text-center">
+                <span class="text-gray-400 text-[8px] uppercase block">{{ ui().weight }}</span>
+                <span class="text-poke-blue font-bold text-base">{{ (pokemon().weight || 0) / 10 }} kg</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 flex flex-col h-full min-h-0 space-y-4">
+          
+          <div class="shrink-0">
+            <h3 class="text-poke-blue text-[10px] uppercase font-bold mb-2 flex items-center gap-2">
+              <span class="w-2 h-2 bg-poke-yellow rounded-full"></span> {{ ui().evoLine }}
+            </h3>
+            <div class="bg-gray-50/50 rounded-2xl p-4 border border-gray-400 shadow-inner min-h-[100px] flex items-center justify-center">
+                @if (loadingEvolutions()) {
+                <div class="flex items-center gap-4">
+                    @for (i of [].constructor(expectedEvoCount()); track $index; let last = $last) {
+                    <div class="flex items-center gap-3 animate-pulse">
+                        <div class="flex flex-col items-center">
+                        <div class="w-14 h-14 bg-gray-300 rounded-full border-2 border-gray-200"></div>
+                        <div class="w-10 h-2 bg-gray-300 mt-2 rounded"></div>
+                        </div>
+                        @if (!last) { 
+                        <div class="text-gray-300 font-bold">→</div> 
+                        }
+                    </div>
+                    }
+                </div>
+                } @else {
+                <div class="flex items-center gap-4 overflow-x-auto scrollbar-hide overflow-hidden">
+                  @if (evolutions().length > 1) {
+                    @for (evo of evolutions(); track evo.id; let last = $last) {
+                      <div class="flex items-center gap-3">
+                        <div class="flex flex-col items-center">
+                          <div class="w-14 h-14 bg-white rounded-full border-2 border-gray-100 p-2 shadow-sm relative">
+                            <img [src]="evo.image" class="w-full h-full object-contain">
+                            @if (evo.minLevel) { <span class="absolute bottom-0 left-0 right-0 bg-poke-blue text-white text-[6px] text-center font-bold">LV. {{evo.minLevel}}</span> }
+                          </div>
+                          <span class="text-[8px] font-bold uppercase text-gray-500 mt-1">{{ evo.name }}</span>
+                        </div>
+                        @if (!last) { <span class="text-poke-yellow font-bold">→</span> }
+                      </div>
+                    }
+                  } @else {
+                    <p class="text-[9px] text-gray-400 italic">{{ ui().singleStage }}</p>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="flex-1 flex flex-col min-h-[250px] lg:min-h-0 relative">
+            <h3 class="text-poke-blue text-[10px] uppercase font-bold mb-2 flex items-center gap-2">
+              <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span> {{ ui().moveStats }}
+            </h3>
+
+            <div class="flex-1 overflow-hidden border border-gray-100 rounded-xl bg-white relative shadow-sm">
+              @if (!loadingMoves() && detailedMoves().length === 0) {
+                <div class="h-full flex flex-col items-center justify-center p-8 text-center">
+                  <img [src]="placeholder" class="w-12 h-12 opacity-20 mb-2">
+                  <p class="text-[10px] text-gray-400 italic">
+                    {{ pokemonService.language() === 'es' ? 'No se encontraron movimientos para esta forma.' : 'No moves found for this form.' }}
+                  </p>
+                </div>
+              } @else {
+                <app-reusable-table 
+                    [data]="detailedMoves()" 
+                    [columns]="moveColumns()"
+                    [hasPagination]="true"
+                    [currentPage]="currentPage()"
+                    [totalItems]="pokemon().moves?.length || 0"
+                    [pageSize]="10"
+                    [isLoading]="loadingMoves()" 
+                    (onNextPage)="nextMovePage()"
+                    (onPrevPage)="prevMovePage()"
+                    [skeletonActive]="loadingMoves()"
+                    [labelPrev]="ui().prev"
+                    [labelNext]="ui().next"
+                    [labelPage]="ui().page"
+                    [labelOf]="ui().of"
+                    class="h-full block">
+                </app-reusable-table>
+              }
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

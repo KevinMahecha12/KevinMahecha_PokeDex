@@ -1,0 +1,86 @@
+<div class="flex justify-center w-full h-full">
+  <div class="border-2 border-blue-50 rounded-2xl w-full overflow-hidden bg-white shadow-inner flex flex-col h-full">
+    
+    <div class="overflow-x-auto flex-1 min-h-0">
+      <table class="w-full text-left border-collapse table-fixed">
+        <thead class="bg-blue-50/50 sticky top-0 z-10">
+          @for (headerGroup of table.getHeaderGroups(); track headerGroup.id) {
+            <tr>
+              @for (header of headerGroup.headers; track header.id) {
+                <th [style.width.px]="header.getSize()" class="px-4 py-3 text-[10px] font-black uppercase text-poke-blue border-b border-blue-100 bg-blue-50">
+                  <ng-container *flexRender="header.column.columnDef.header; props: header.getContext(); let headerValue">
+                    {{ headerValue }}
+                  </ng-container>
+                </th>
+              }
+            </tr>
+          }
+        </thead>
+
+        <tbody class="divide-y divide-gray-50">
+          @if (isLoading || skeletonActive) {
+            @for (row of skeletonRows; track $index) {
+              <tr class="h-[41px]">
+                @for (col of table.getVisibleLeafColumns(); track col.id) {
+                  <td class="px-4 py-3">
+                    <div class="h-2.5 bg-gray-400 rounded-full w-3/4 skeleton-shimmer"></div>
+                  </td>
+                }
+              </tr>
+            }
+          } 
+          @else {
+            @for (row of table.getRowModel().rows; track row.id) {
+              <tr class="hover:bg-blue-50/30 transition-colors group h-[41px]">
+                @for (cell of row.getVisibleCells(); track cell.id) {
+                  <td class="px-4 py-3 text-[11px] text-gray-600 font-medium whitespace-nowrap overflow-hidden text-ellipsis">
+                    <ng-container *flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cellValue">
+                      {{ cellValue || '--' }}
+                    </ng-container>
+                  </td>
+                }
+              </tr>
+            }
+
+            @if (table.getRowModel().rows.length < pageSize) {
+               @for (empty of [].constructor(pageSize - table.getRowModel().rows.length); track $index) {
+                 <tr class="h-[41px]">
+                   <td [attr.colspan]="table.getVisibleLeafColumns().length"></td>
+                 </tr>
+               }
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (hasPagination) {
+      <div class="flex items-center justify-between p-1 md:p-4 bg-gray-50 border-t border-blue-100 shrink-0">
+        <button 
+          (click)="onPrevPage.emit()" 
+          [disabled]="currentPage === 0 || isLoading"
+          class="flex items-center gap-1 px-3 py-1.5 text-[7px] md:text-[10px] font-bold uppercase bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-poke-blue hover:text-white disabled:opacity-30 transition-all cursor-pointer">
+          ◀ {{ labelPrev }}
+        </button>
+        
+        <div class="flex flex-col items-center">
+          <span class="text-[7px] md:text-[10px] mx-2 text-center font-black text-poke-blue uppercase tracking-widest">
+            {{ labelPage }} {{ currentPage + 1 }} {{ labelOf }} {{ totalPages || 1 }}
+          </span>
+          <div class="w-12 h-1 bg-poke-blue/20 rounded-full mt-1 overflow-hidden">
+            <div class="h-full bg-poke-blue transition-all duration-300" 
+                [style.width.%]="totalPages > 0 ? ((currentPage + 1) / totalPages) * 100 : 0">
+            </div>
+          </div>
+        </div>
+
+        <button 
+          (click)="onNextPage.emit()" 
+          [disabled]="(currentPage + 1) >= totalPages || isLoading"
+          class="flex items-center gap-1 px-3 py-1.5 text-[7px] md:text-[10px] font-bold uppercase bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-poke-blue hover:text-white disabled:opacity-30 transition-all cursor-pointer">
+          {{ labelNext }} ▶
+        </button>
+      </div>
+    }
+  </div>
+</div>

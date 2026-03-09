@@ -1,0 +1,19 @@
+<div class="bg-white border-2 border-poke-blue rounded-2xl shadow-lg overflow-hidden w-full hover:scale-105 transition-transform group">
+    <div class="bg-poke-blue text-white text-[10px] text-right px-2 py-0.5 italic">
+        No. {{pokemonData().id}}
+    </div>
+
+    <div class="h-32 flex justify-center p-4 bg-gray-50">
+        <img [src]="currentImage()" 
+             [alt]="pokemonData().name" 
+             (error)="handleImageError()"
+             loading="lazy"
+             class="h-full object-contain transition-opacity duration-300">
+    </div>
+
+    <div class="bg-poke-yellow p-2 border-t-2 border-poke-blue text-center">
+      <h3 class="font-pokemon text-poke-blue text-xs uppercase truncate">
+          {{pokemonData().name}}
+      </h3>
+    </div>
+</div>

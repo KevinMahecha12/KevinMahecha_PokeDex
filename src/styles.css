@@ -1,3 +1,83 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
 
-@import 'tailwindcss';
+@font-face {
+  font-family: 'PokemonFont';
+  src: url('/assets/fonts/Pokemon\ Solid.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@theme {
+  --color-poke-red: #ff0000;
+  --color-poke-red-alt: #cc0000;
+  --color-poke-blue: #3b4cca;
+  --color-poke-yellow: #ffde00;
+  --color-poke-yellow-alt: #b3a125;
+
+  --font-pokemon: "PokemonFont", sans-serif;
+  --tracking-pokemon: 0.2em;
+}
+
+.font-pokemon {
+  letter-spacing: var(--tracking-pokemon);
+}
+
+body {
+  @apply bg-gray-100;
+  font-family: var(--font-pokemon); 
+  letter-spacing: var(--tracking-pokemon);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  letter-spacing: inherit;
+}
+
+
+
+.pokeball-spinner {
+  width: 100px;
+  height: 100px;
+  background: white;
+  border: 5px solid #333;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  animation: spin 0.85s linear infinite;   
+}
+
+.pokeball-spinner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: #f12c2c;
+  border-bottom: 5px solid #333;
+}
+
+.pokeball-spinner::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border: 5px solid #333;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  box-shadow: 0 0 0 4px white;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
