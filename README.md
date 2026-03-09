@@ -1,59 +1,27 @@
-# KevinMahechaPokeApi
+# KevinMahecha_PokeDex
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+Este proyecto es una Pokédex interactiva desarrollada con el objetivo de profundizar en el ecosistema de **Angular**. Se enfoca en la implementación de las últimas características del framework, la gestión de estados reactivos y el consumo eficiente de APIs REST.
 
-## Development server
+## Propósito del Proyecto
+A diferencia de una aplicación básica, este proyecto prioriza la experiencia de usuario (UX) y la eficiencia técnica, utilizando herramientas modernas para resolver problemas comunes como la latencia de red y la manipulación de flujos de datos complejos.
 
-To start a local development server, run:
+## Tecnologías y Conceptos Implementados
 
-```bash
-ng serve
-```
+### Angular (v17/18+)
+Uso de flujo de control moderno (`@if`, `@for`) y bloques de `@defer` para optimizar la carga de componentes pesados.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Signals
+Gestión de estado reactivo para filtros, modales y el control fino de los estados de carga.
 
-## Code scaffolding
+### RxJS
+Coordinación de múltiples peticiones asíncronas mediante `forkJoin` y manejo de errores con `catchError` para asegurar la estabilidad de la aplicación.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Tailwind CSS
+Diseño responsivo con técnicas de *glassmorphism* (`backdrop-blur`) y animaciones personalizadas en CSS.
 
-```bash
-ng generate component component-name
-```
+## Características Destacadas
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+* **Optimización de Carga:** Sistema de *Skeleton Screens* que proporciona feedback visual inmediato mientras se obtienen los datos.
+* **Timer de Cortesía:** Implementación de un retraso de 500ms para el spinner de carga global, evitando parpadeos visuales innecesarios en conexiones rápidas.
+* **Búsqueda e Historial:** Sistema de búsqueda global que integra resultados locales y consultas directas a la API cuando el Pokémon no reside en la caché actual.
+* **Paginación Eficiente:** Manejo de grandes volúmenes de datos mediante un sistema de paginado manual controlado por señales.
